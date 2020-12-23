@@ -10,7 +10,9 @@ class ConnectUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Connect us',
-      home: SplashScreen(),
+      home: SafeArea(
+        child: SplashScreen(),
+      ),
     );
   }
 }
