@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "817539662436",
+    "project_id": "connect-us-2d704",
+    "storage_bucket": "connect-us-2d704.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817539662436:android:ec4005ca3d4f5ae63c9571",
+        "android_client_info": {
+          "package_name": "com.skit.connect_us"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817539662436-40bkn67ialjgqnqh5ncq83cba4vkt328.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB48kwBoPQVmTbUeiep7okPIN52kUEUJqA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817539662436-40bkn67ialjgqnqh5ncq83cba4vkt328.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
