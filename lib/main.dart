@@ -1,5 +1,6 @@
 import 'package:connect_us/routes_helper.dart';
 import 'package:connect_us/screens/login_screen.dart';
+import 'package:connect_us/screens/recent_chats_screen.dart';
 import 'package:connect_us/screens/signup_screen.dart';
 import 'package:connect_us/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class ConnectUs extends StatelessWidget {
         RoutesHelper.SPLASH: (context) => SafeArea(child: SplashScreen()),
         RoutesHelper.LOGIN: (context) => SafeArea(child: LoginScreen()),
         RoutesHelper.SIGN_UP: (context) => SafeArea(child: SignupScreen()),
+        RoutesHelper.RECENT_CHATS: (context) => SafeArea(child: RecentChatsScreen()),
       },
       initialRoute: RoutesHelper.SPLASH,
     );

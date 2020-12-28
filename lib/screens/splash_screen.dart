@@ -1,6 +1,9 @@
+import 'package:connect_us/components/background_gradient.dart';
+import 'package:connect_us/routes_helper.dart';
+import 'package:connect_us/utils/constants.dart';
+import 'package:connect_us/utils/database_handler.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   void initState() {
     super.initState();
+
+    initUtils();
     // setting the controller for splash animations.
     _controller = AnimationController(duration: Duration(milliseconds: 1300), vsync: this);
 
@@ -35,11 +40,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             milliseconds: 1500,
           ),
           () {
-            Navigator.pushReplacement(
+            String token = DataBaseHandler.getValue(Constants.USER_TOKEN);
+            Navigator.popAndPushNamed(
               context,
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(),
-              ),
+              token == null ? RoutesHelper.LOGIN : RoutesHelper.RECENT_CHATS,
             );
           },
         );
@@ -53,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         body: Stack(
       alignment: Alignment.center,
       children: [
-        _backGroundGradient(),
+        backGroundGradient(),
         FadeTransition(
             opacity: _fadeAnimation,
             child: Transform.translate(
@@ -64,17 +68,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     ));
   }
 
-  Widget _backGroundGradient() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Colors.lightBlue[400],
-          Colors.blue[700],
-        ], stops: [
-          0.0,
-          1.0,
-        ], begin: FractionalOffset.topLeft, end: FractionalOffset.bottomRight, tileMode: TileMode.repeated),
-      ),
-    );
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void initUtils() async {
+    await Firebase.initializeApp();
+    DataBaseHandler.init();
   }
 }
