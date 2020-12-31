@@ -1,4 +1,5 @@
 import 'package:connect_us/components/background_gradient.dart';
+import 'package:connect_us/components/screen_wrapper.dart';
 import 'package:connect_us/routes_helper.dart';
 import 'package:connect_us/utils/constants.dart';
 import 'package:connect_us/utils/database_handler.dart';
@@ -53,19 +54,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      alignment: Alignment.center,
-      children: [
-        backGroundGradient(),
-        FadeTransition(
-            opacity: _fadeAnimation,
-            child: Transform.translate(
-              offset: Offset(0, -(_translateAnimation.value * 200)),
-              child: Image.asset("images/1.png"),
-            ))
-      ],
-    ));
+    return ScreenWrapper(
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: Transform.translate(
+          offset: Offset(0, -(_translateAnimation.value * 200)),
+          child: Image.asset("images/1.png"),
+        ),
+      ),
+    );
   }
 
   @override
