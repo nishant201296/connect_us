@@ -1,29 +1,20 @@
-import 'chat_model.dart';
-
 class UserModel {
-  final String _userId;
-  List<ChatModel> _chats = [];
+  final String userId;
+  List<String> chats;
+  final String email;
 
-  UserModel(this._userId, this._chats);
+  UserModel(this.userId, this.email, this.chats);
 
-  String getUserId() {
-    return this._userId;
-  }
+  Map<String, dynamic> toMap() => {
+        "userId": this.userId,
+        "email": this.email,
+        "chats": this.chats == null ? [] : [...chats],
+      };
 
-  ChatModel getChat(String chatId) {
-    this._chats.forEach((element) {
-      if (element.getChatId() == chatId) {
-        return element;
-      }
-    });
-    return null;
-  }
-
-  void addChat(ChatModel chat) {
-    this._chats.add(chat);
-  }
-
-  Map<String, dynamic> toMap() {
-    return {"userId": this._userId, "chats": this._chats};
+  static UserModel fromMap(Map<String, dynamic> map) {
+    String userId = map["userId"];
+    List<String> chats = map["chats"].cast<String>();
+    String email = map["email"];
+    return UserModel(userId, email, chats);
   }
 }

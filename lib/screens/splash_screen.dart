@@ -55,13 +55,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return ScreenWrapper(
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Transform.translate(
-          offset: Offset(0, -(_translateAnimation.value * 200)),
-          child: Image.asset("images/1.png"),
+      children: [
+        FadeTransition(
+          opacity: _fadeAnimation,
+          child: Transform.translate(
+            offset: Offset(0, -(_translateAnimation.value * 200)),
+            child: Image.asset("images/1.png"),
+          ),
         ),
-      ),
+      ],
     );
   }
 
