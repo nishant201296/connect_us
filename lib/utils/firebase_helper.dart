@@ -18,6 +18,7 @@ void addAuthChangeListener() {
   });
 }
 
+// TODO: add new chat and new message id on first position
 void addChat(ChatModel chat, String otherGuysId) async {
   // adding a new chat document
   await fireStore.collection("chats").add(chat.toMap());
@@ -45,5 +46,8 @@ void addMessage(MessageModel message) async {
       await fireStore.collection("chats").where("chatId", isEqualTo: message.getChatId()).get();
   List<String> updatedMessages = chatSnap.docs.first.data()["chatMessages"].cast<String>();
   updatedMessages.add(message.getMessageId());
-  fireStore.collection("chats").doc(chatSnap.docs.first.id).update({"chats": updatedMessages});
+  fireStore
+      .collection("chats")
+      .doc(chatSnap.docs.first.id)
+      .update({"chatMessages": updatedMessages});
 }

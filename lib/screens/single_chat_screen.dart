@@ -26,7 +26,7 @@ class _SingleChatState extends State<SingleChat> {
   void initState() {
     super.initState();
     chatWithHim = _findChatWithHim();
-    // if not chat found with this user create a new chatmodel
+    // if no chat found with this user create a new chatmodel
     if (chatWithHim == null) {
       chatWithHim = generateChatId([widget.otherGuy.userId, currentUserModel.userId]);
       this.thisChat = ChatModel(
@@ -52,6 +52,7 @@ class _SingleChatState extends State<SingleChat> {
         stream: fireStore
             .collection("chatMessages")
             .where("chatId", isEqualTo: chatWithHim)
+            .orderBy("timeStamp", descending: false)
             .snapshots(),
         builder: (context, snapShot) {
           if (!snapShot.hasData) {
@@ -80,6 +81,8 @@ class _SingleChatState extends State<SingleChat> {
                   children: [
                     Expanded(
                       child: TextField(
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
                         controller: messageController,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
@@ -110,6 +113,7 @@ class _SingleChatState extends State<SingleChat> {
                                 currentUserModel.email,
                                 DateTime.now().toUtc().toIso8601String()),
                           );
+                          messageController.clear();
                         },
                         child: Icon(
                           Icons.send,
