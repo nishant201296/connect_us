@@ -24,54 +24,62 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return ScreenWrapper(
       children: [
-        loginSignupForm(
-            formKey: _formKey,
-            emailController: _emailController,
-            passwordController: _passwordController,
-            loading: _loading,
-            buttonText: "Sign up",
-            buttonOnPressed: () async {
-              if (_formKey.currentState.validate()) {
-                FocusScope.of(context).unfocus();
-                setState(() {
-                  _loading = true;
-                });
-                try {
-                  await firebaseAuth.createUserWithEmailAndPassword(
-                      email: _emailController.value.text, password: _passwordController.value.text);
-                  setState(() {
-                    DataBaseHandler.setValue(Constants.USER_TOKEN, firebaseAuth.currentUser.uid);
-                    _loading = false;
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(RoutesHelper.RECENT_CHATS, (route) => false);
-                  });
-                } catch (ex) {
-                  setState(() {
-                    _loading = false;
-                    Flushbar(
-                      isDismissible: true,
-                      message: getFirebaseErrorString(ex.code),
-                      flushbarPosition: FlushbarPosition.TOP,
-                      flushbarStyle: FlushbarStyle.FLOATING,
-                      reverseAnimationCurve: Curves.decelerate,
-                      forwardAnimationCurve: Curves.elasticOut,
-                    ).show(context);
-                  });
-                }
-              }
-            }),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              "Already a member? Click here to login",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+        Column(
+          children: [
+            Expanded(
+              child: loginSignupForm(
+                  formKey: _formKey,
+                  emailController: _emailController,
+                  passwordController: _passwordController,
+                  loading: _loading,
+                  buttonText: "Sign up",
+                  buttonOnPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      FocusScope.of(context).unfocus();
+                      setState(() {
+                        _loading = true;
+                      });
+                      try {
+                        await firebaseAuth.createUserWithEmailAndPassword(
+                            email: _emailController.value.text,
+                            password: _passwordController.value.text);
+                        setState(() {
+                          DataBaseHandler.setValue(
+                              Constants.USER_TOKEN, firebaseAuth.currentUser.uid);
+                          _loading = false;
+                          Navigator.of(context)
+                              .pushNamedAndRemoveUntil(RoutesHelper.RECENT_CHATS, (route) => false);
+                        });
+                      } catch (ex) {
+                        setState(() {
+                          _loading = false;
+                          Flushbar(
+                            isDismissible: true,
+                            message: getFirebaseErrorString(ex.code),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            flushbarStyle: FlushbarStyle.FLOATING,
+                            reverseAnimationCurve: Curves.decelerate,
+                            forwardAnimationCurve: Curves.elasticOut,
+                          ).show(context);
+                        });
+                      }
+                    }
+                  }),
             ),
-          ),
-        ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  "Already a member? Click here to login",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
