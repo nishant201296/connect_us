@@ -22,6 +22,8 @@ class _SingleChatState extends State<SingleChat> {
   ChatModel thisChat;
 
   final TextEditingController messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -62,11 +64,13 @@ class _SingleChatState extends State<SingleChat> {
               ),
             );
           }
-          List<QueryDocumentSnapshot> messagesSnap = snapShot.data.docs;
+          List<QueryDocumentSnapshot> messagesSnap = snapShot.data.docs.reversed.toList();
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
+                  reverse: true,
+                  controller: _scrollController,
                   itemCount: messagesSnap.length,
                   itemBuilder: (context, index) {
                     MessageModel message = MessageModel.fromMap(messagesSnap[index].data());
@@ -104,15 +108,18 @@ class _SingleChatState extends State<SingleChat> {
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: GestureDetector(
                         onTap: () {
-                          addMessage(
-                            MessageModel(
-                                generateMessageId(this.thisChat.chatId),
-                                this.thisChat.chatId,
-                                messageController.value.text,
-                                [widget.otherGuy.email],
-                                currentUserModel.email,
-                                DateTime.now().toUtc().toIso8601String()),
-                          );
+                          _scrollController.animateTo(0.0,
+                              duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+                          if (messageController.value.text.isNotEmpty)
+                            addMessage(
+                              MessageModel(
+                                  generateMessageId(this.thisChat.chatId),
+                                  this.thisChat.chatId,
+                                  messageController.value.text,
+                                  [widget.otherGuy.email],
+                                  currentUserModel.email,
+                                  DateTime.now().toUtc().toIso8601String()),
+                            );
                           messageController.clear();
                         },
                         child: Icon(

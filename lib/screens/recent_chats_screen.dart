@@ -72,12 +72,24 @@ class _RecentChatsScreenState extends State<RecentChatsScreen> {
                       return FlatButton(
                           color: Colors.transparent,
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SingleChat(null),
-                              ),
-                            );
+                            String otherGuysEmail =
+                                chats[index].chatParties.first == currentUserModel.email
+                                    ? chats[index].chatParties.second
+                                    : chats[index].chatParties.first;
+                            fireStore
+                                .collection("users")
+                                .where("email", isEqualTo: otherGuysEmail)
+                                .get()
+                                .then((QuerySnapshot snap) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SingleChat(
+                                    UserModel.fromMap(snap.docs.first.data()),
+                                  ),
+                                ),
+                              );
+                            });
                           },
                           child: chatTiles[index]);
                     },

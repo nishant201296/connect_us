@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Widget buildMessageBubble(MessageModel message, bool isMe) {
   return Column(
     mainAxisSize: MainAxisSize.max,
-    crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.end,
+    crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
     children: [
       Container(
         margin: isMe ? EdgeInsets.only(left: 50) : EdgeInsets.only(right: 50),
