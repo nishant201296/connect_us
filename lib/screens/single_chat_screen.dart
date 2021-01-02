@@ -21,7 +21,7 @@ class _SingleChatState extends State<SingleChat> {
   String chatWithHim;
   ChatModel thisChat;
 
-  final TextEditingController messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -87,7 +87,7 @@ class _SingleChatState extends State<SingleChat> {
                       child: TextField(
                         maxLines: null,
                         keyboardType: TextInputType.multiline,
-                        controller: messageController,
+                        controller: _messageController,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.lightBlue, width: 4),
@@ -110,17 +110,17 @@ class _SingleChatState extends State<SingleChat> {
                         onTap: () {
                           _scrollController.animateTo(0.0,
                               duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
-                          if (messageController.value.text.isNotEmpty)
+                          if (_messageController.value.text.isNotEmpty)
                             addMessage(
                               MessageModel(
                                   generateMessageId(this.thisChat.chatId),
                                   this.thisChat.chatId,
-                                  messageController.value.text,
+                                  _messageController.value.text,
                                   [widget.otherGuy.email],
                                   currentUserModel.email,
                                   DateTime.now().toUtc().toIso8601String()),
                             );
-                          messageController.clear();
+                          _messageController.clear();
                         },
                         child: Icon(
                           Icons.send,
@@ -136,6 +136,13 @@ class _SingleChatState extends State<SingleChat> {
         },
       )),
     );
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
   String _findChatWithHim() {
