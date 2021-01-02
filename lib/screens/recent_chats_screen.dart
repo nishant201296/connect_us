@@ -66,7 +66,10 @@ class _RecentChatsScreenState extends State<RecentChatsScreen> {
                       color: Colors.white,
                     ),
                   )
-                : ListView.builder(
+                : ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return Divider();
+                    },
                     itemCount: chatTiles.length,
                     itemBuilder: (context, index) {
                       return FlatButton(
