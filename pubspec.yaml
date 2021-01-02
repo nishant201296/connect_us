@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore: ^0.14.4
   shared_preferences: ^0.5.12+4
   flushbar: ^1.10.4
+  flutter_local_notifications: ^3.0.2
 
 
 dev_dependencies:

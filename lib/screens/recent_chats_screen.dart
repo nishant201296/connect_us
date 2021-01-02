@@ -7,6 +7,7 @@ import 'package:connect_us/models/chat_model.dart';
 import 'package:connect_us/routes_helper.dart';
 import 'package:connect_us/screens/single_chat_screen.dart';
 import 'package:connect_us/utils/firebase_helper.dart';
+import 'package:connect_us/utils/notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:connect_us/models/user_model.dart';

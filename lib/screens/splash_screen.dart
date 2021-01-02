@@ -3,6 +3,7 @@ import 'package:connect_us/components/screen_wrapper.dart';
 import 'package:connect_us/routes_helper.dart';
 import 'package:connect_us/utils/constants.dart';
 import 'package:connect_us/utils/database_handler.dart';
+import 'package:connect_us/utils/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -76,5 +77,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void initUtils() async {
     await Firebase.initializeApp();
     DataBaseHandler.init();
+    NotificationService.getInstance().initialize();
   }
 }
