@@ -1,6 +1,6 @@
 # connect_us
 
-A new Flutter project.
+A chat application built on flutter
 
 ## Getting Started
 
